@@ -1,0 +1,5 @@
+extraScrapeConfigs: |
+  - job_name: 'python-dns'
+    static_configs:
+      - targets:
+        - prom-metric-prometheus-metrics:8000
