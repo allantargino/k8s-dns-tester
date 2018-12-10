@@ -2,8 +2,13 @@
 
 ## Requirements
 
-Please install:
+You will need to have:
 
+* A Kubernetes cluster up and running.
+
+And also to install:
+
+* [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
 * [Draft](https://github.com/azure/draft)
 * [Helm](https://docs.helm.sh/using_helm/)
 
@@ -77,3 +82,5 @@ dns_success_total / (dns_success_total + dns_error_total)
 ```grafana
 dns_error_total / (dns_success_total + dns_error_total)
 ```
+
+> You can import `grafana.json` into your Grafana dashboard. Instructions can be found [here](http://docs.grafana.org/reference/export_import/#importing-a-dashboard).
