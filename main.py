@@ -1,6 +1,7 @@
 from prometheus_client import start_http_server, Summary, Counter
 import random
 import time
+import datetime
 import dns.resolver
 import os
 
@@ -13,16 +14,21 @@ def process_request(t, names):
     parts = names.split(",")
     for name in parts:
         try:
-            answers = dns.resolver.query(name)
+            resolver = dns.resolver.Resolver()
+            resolver.timeout = 2
+            resolver.lifetime = 1
+            answers = resolver.query(name)
+            ts = time.time()
+            strTime = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S')
             if answers.rrset.items.__len__() > 0:
                 success.inc()
                 for item in answers.rrset.items:
-                    print ("name: " + name + " ip:" + item.address)
+                    print (strTime + " - name: " + name + " ip:" + item.address)
             else:
-                print ("name: " + name + " Not able to resolve")
+                print (strTime + " - name: " + name + " Not able to resolve")
                 error.inc()
         except:
-            print ("name: " + name + " Not able to resolve")
+            print (strTime + " - name: " + name + " Not able to resolve")
             error.inc()
 
 if __name__ == '__main__':
